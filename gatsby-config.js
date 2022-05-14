@@ -7,14 +7,18 @@ module.exports = {
     // You can overwrite values here that are used for the SEO component
     // You can also add new values here to query them like usual
     // See all options: https://github.com/LekoArts/gatsby-themes/blob/main/themes/gatsby-theme-minimal-blog/gatsby-config.js
-    siteTitle: `Minimal Blog`,
-    siteTitleAlt: `Minimal Blog - Gatsby Theme`,
-    siteHeadline: `Minimal Blog - Gatsby Theme from @lekoarts`,
-    siteUrl: `https://minimal-blog.lekoarts.de`,
-    siteDescription: `Typography driven, feature-rich blogging theme with minimal aesthetics. Includes tags/categories support and extensive features for code blocks such as live preview, line numbers, and line highlighting.`,
-    siteLanguage: `en`,
+    siteTitle: `stunnin'.dev`,
+    siteTitleAlt: `stunnin'.dev - programación y otros mundos`,
+    siteHeadline: `stunnin'.dev - programación y otros mundos de @jsm94`,
+    siteUrl: `https://stunnin.dev`,
+    siteDescription: `Sitio personal de Juanan Seco. Blog sobre programación y otros mundos. `,
+    siteLanguage: `es`,
     siteImage: `/banner.jpg`,
-    author: `@lekoarts_de`,
+    author: `@stunnindev`,
+    siteConfig: {
+      baseColor: `zinc`
+    },
+    version: `v1.0.1`
   },
   plugins: [
     {
@@ -23,22 +27,26 @@ module.exports = {
       options: {
         navigation: [
           {
-            title: `Blog`,
+            title: `/blog`,
             slug: `/blog`,
           },
           {
-            title: `About`,
+            title: `/about`,
             slug: `/about`,
           },
         ],
         externalLinks: [
           {
-            name: `Twitter`,
-            url: `https://twitter.com/lekoarts_de`,
+            name: `:gh`,
+            url: `https://github.com/jsm94`,
           },
           {
-            name: `Homepage`,
-            url: `https://www.lekoarts.de?utm_source=minimal-blog&utm_medium=Starter`,
+            name: `:in`,
+            url: `https://www.linkedin.com/in/juan-antonio-seco-merch%C3%A1n/`,
+          },
+          {
+            name: `:tw`,
+            url: `https://twitter.com/stunnindev`,
           },
         ],
       },
@@ -54,8 +62,12 @@ module.exports = {
         // See: https://github.com/LekoArts/gatsby-themes/tree/main/examples/minimal-blog#changing-your-fonts
         web: [
           {
-            name: `IBM Plex Sans`,
-            file: `https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap`,
+            name: `Roboto Mono`,
+            file: `https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap`,
+          },
+          {
+            name: `Open Sans`,
+            file: `https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap`,
           },
         ],
       },
@@ -137,6 +149,11 @@ module.exports = {
       },
     },
     `gatsby-plugin-gatsby-cloud`,
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    'gatsby-plugin-postcss',
+    `gatsby-plugin-react-helmet`,
     shouldAnalyseBundle && {
       resolve: `gatsby-plugin-webpack-bundle-analyser-v2`,
       options: {
@@ -144,6 +161,6 @@ module.exports = {
         reportFilename: `_bundle.html`,
         openAnalyzer: false,
       },
-    },
+    }
   ].filter(Boolean),
 }
