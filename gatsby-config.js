@@ -11,7 +11,7 @@ module.exports = {
     siteTitleAlt: `stunnin'.dev - programación y otros mundos`,
     siteHeadline: `stunnin'.dev - programación y otros mundos de @jsm94`,
     siteUrl: `https://stunnin.dev`,
-    siteDescription: `Sitio personal de Juanan Seco. Blog sobre programación y otros mundos. `,
+    siteDescription: `Sitio personal de Juanan Seco. Blog sobre programación y otros mundos.`,
     siteLanguage: `es`,
     siteImage: `/banner.jpg`,
     author: `@stunnindev`,
@@ -76,9 +76,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `minimal-blog - @lekoarts/gatsby-theme-minimal-blog`,
-        short_name: `minimal-blog`,
-        description: `Typography driven, feature-rich blogging theme with minimal aesthetics. Includes tags/categories support and extensive features for code blocks such as live preview, line numbers, and code highlighting.`,
+        name: `stunnin'.dev - programación y otros mundos`,
+        short_name: `stunnin.dev`,
+        description: `Sitio personal de Juanan Seco. Blog sobre programación y otros mundos.`,
         start_url: `/`,
         background_color: `#fff`,
         // This will impact how browsers show your PWA/website
@@ -143,7 +143,7 @@ module.exports = {
               }
             `,
             output: `rss.xml`,
-            title: `Minimal Blog - @lekoarts/gatsby-theme-minimal-blog`,
+            title: `stunnin'.dev - programación y otros mundos`,
           },
         ],
       },
