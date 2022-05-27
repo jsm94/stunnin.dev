@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       - name: Install dependencies
-      - run: npm ci
+        run: npm ci
       - name: Gatsby build
-      - run: gatsby build
+        run: gatsby build
       - name: Deploy to Firebase
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_STUNNINDEV }}'
