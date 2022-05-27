@@ -14,9 +14,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: npm ci
+        run: npm install
       - name: Gatsby build
-        run: gatsby build
+        run: npm run build
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
