@@ -20,13 +20,14 @@ En este caso es bastante simple, ya que por la arquitectura actual del proyecto 
 
 ### ¿Cómo configuramos esto?
 
-Si bien en este artículo no se explicará en detalle el proceso, en un futuro elaboraré un tutorial bajo un mini-proyecto para explicar la configuración paso a paso.
+Si bien en este artículo no se explicará en detalle el proceso de configuración e integración de este sistema, sí quiero señalar a simple vista qué elementos intervienen en este proceso y mostrar lo sencillo que fué para este proyecto.
+En un futuro elaboraré un tutorial bajo un mini-proyecto para explicar la configuración paso a paso.
 
-Lo primero es tener una cuenta de Google para poder realizar login en la plataforma de Firebase.
+Lo primero es tener una cuenta de **Google** para poder realizar `login` en la plataforma de Firebase.
 
 ![Consola de Firebase](./firebase-console.png)
 
-Después de esto, si pulsamos en **Agregar proyecto**, seguimos el asistente y podremos crear un nuevo proyecto o elegir uno existente que tengamos en Google Cloud.
+Después de esto, si pulsamos en `Agregar proyecto`, seguimos el asistente y podremos crear un nuevo proyecto o elegir uno existente que tengamos en **Google Cloud**.
 
 Una vez configurado el proyecto podemos vincularlo con la librería `firebase-tools` que agregaremos a nuestro proyecto local.
 
@@ -49,17 +50,27 @@ Nos aparecerá un asistente de configuración bastante intuitivo.
 
 ![Salida de comando firebase init](./firebase-init.png)
 
-Escogeremos la opción de **"Hosting: ... GitHub Action deploys"**.
+Para este caso escogimos la opción de **"Hosting: ... GitHub Action deploys"**.
 
 Esto nos establece toda la configuración necesaria para su despliegue en el hosting de Firebase y además nos configura
-un **workflow** para **GitHub** el cual nos despliega de forma automática el proyecto cuando hagamos un `merge/push` con la rama que tengamos configurada.
+un **workflow** para **GitHub** el cual nos despliega de forma automática el proyecto cuando hagamos un `push` con la rama que tengamos configurada.
 
 Al terminar todos los pasos anteriores tendremos en nuestro proyecto los siguientes nuevos recursos referentes a Firebase.
 
 ![Árbol de archivos Firebase](./tree-firebase.png)
 
-Importante añadir a nuestro `.gitignore` la carpeta `.firebase`, ya que es contenido cacheado.
+Importante añadir a nuestro `.gitignore` la carpeta `.firebase`.
 
-<br/>
+Si nos fijamos en la carpeta `.github/workflows`, contiene una serie de ficheros que serán los que interprete GitHub para ejecutar GitHub Actions.
+
+He tenido que hacer una serie de ajustes al fichero [firebase-hosting-merge.yml](https://github.com/jsm94/stunnin.dev/blob/master/.github/workflows/firebase-hosting-merge.yml) que te crea por defecto para la acción `push`, como por ejemplo añadir un paso para la instalación de las dependencias.
+
+También es importante configurar los ajustes de caché en el fichero [firebase.json](https://github.com/jsm94/stunnin.dev/blob/master/firebase.json) tal y como se aconseja en la [documentación oficial de Gatsby](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-firebase/).
+
+Con todo esto configurado sólo tengo hacer `push` y se estarán desplegando automáticamente los cambios a producción.
+
+![Pasos de despliegue a producción a través de GitHub Actions](./github-actions.png)
+
+🚀
 
 Foto de portada de [Thomas Drouault](https://unsplash.com/es/@thomasdrouaultphotography) en [Unsplash](https://unsplash.com/)
