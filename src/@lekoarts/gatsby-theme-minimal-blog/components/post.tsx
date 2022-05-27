@@ -9,11 +9,13 @@ import PostFooter from "@lekoarts/gatsby-theme-minimal-blog/src/components/post-
 import StunninHeading from "./stunnin-heading"
 import moment from "moment"
 import 'moment/locale/es'
-
-const px = [`32px`, `16px`, `8px`, `4px`]
-const shadow = px.map((v) => `rgba(0, 0, 0, 0.15) 0px ${v} ${v} 0px`)
+import { Link } from "gatsby"
+import StunninButton from "./stunnin-button"
+import replaceSlashes from "@lekoarts/gatsby-theme-minimal-blog/src/utils/replaceSlashes"
+import useMinimalBlogConfig from "@lekoarts/gatsby-theme-minimal-blog/src/hooks/use-minimal-blog-config"
 
 const Post = ({ data: { post } }) => {
+  const { basePath, blogPath } = useMinimalBlogConfig()
   const image: string = post.banner.childImageSharp.resize.src
   moment.locale(`es`)
   const postDate = moment(post.date, "DD.MM.YYYY")
@@ -29,7 +31,7 @@ const Post = ({ data: { post } }) => {
       <StunninHeading as="h1" variant="styles.h1">
         {post.title}
       </StunninHeading>
-      <p sx={{ color: `secondary`, mt: 3, mb: 3, a: { color: `secondary` }, fontSize: [1, 1, 2] }}>
+      <p sx={{ color: `secondary`, mt: 3, mb: 3, a: { color: `secondary` }, fontSize: [1, 1, 1] }}>
         <time>{postDate.format("D [de] MMMM [de] YYYY")}</time>
         {post.timeToRead && ` — `}
         {post.timeToRead && <span>{post.timeToRead} minuto{(post.timeToRead > 1) ? `s` : ``} de lectura</span>}
@@ -45,14 +47,19 @@ const Post = ({ data: { post } }) => {
       <section
         sx={{
           my: 5,
-          ".gatsby-resp-image-wrapper": { my: [4, 4, 5], boxShadow: shadow.join(`, `) },
+          ".gatsby-resp-image-wrapper": { my: [4, 4, 5]},
+          ".gatsby-resp-image-wrapper img": { borderRadius: `0.5rem`},
           variant: `layout.content`,
-          "& p": {mb: 4},
+          "& p": {my: 4},
+          "& code": {fontSize: [1, 1, 1] },
           "& .gatsby-highlight": {mb: 4}
         }}
       >
         <MDXRenderer>{post.body}</MDXRenderer>
       </section>
+      <Link to={replaceSlashes(`/${basePath}/${blogPath}`)}>
+          <StunninButton>{`<- blog`}</StunninButton>
+      </Link>
       <PostFooter post={post} />
     </Layout>
   )

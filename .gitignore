@@ -67,5 +67,6 @@ public
 .idea
 .vscode
 .DS_Store
+.firebase
 
 external-resources

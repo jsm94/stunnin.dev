@@ -1,0 +1,65 @@
+---
+title: Desplegando en Firebase
+date: 2022-05-20
+description: Cómo se realiza un despliegue en Firebase
+tags:
+  - firebase
+  - gcp
+  - cd
+  - projects
+banner: ./thomas-drouault-h7PJC8pvmHI-unsplash.jpg
+---
+
+Es cierto que para un proyecto de este tipo tampoco sería muy tedioso ejecutar un simple `gatsby build` y tras esperar unos minutos hacer un `firebase deploy`.
+
+Pero a medida que crezca el número de artículos posiblemente se tome más tiempo en completar el `build`, por esto nos viene muy bien seguir una estrategia de CD (Continuous Deployment) para poder automatizar este proceso.
+
+En este caso es bastante simple, ya que por la arquitectura actual del proyecto no era necesario implementar CI (Continuous Integration). Por lo que el ciclo de CD quedaría de la siguiente forma.
+
+![Ciclo CD](./cd-cicle.png)
+
+### ¿Cómo configuramos esto?
+
+Si bien en este artículo no se explicará en detalle el proceso, en un futuro elaboraré un tutorial bajo un mini-proyecto para explicar la configuración paso a paso.
+
+Lo primero es tener una cuenta de Google para poder realizar login en la plataforma de Firebase.
+
+![Consola de Firebase](./firebase-console.png)
+
+Después de esto, si pulsamos en **Agregar proyecto**, seguimos el asistente y podremos crear un nuevo proyecto o elegir uno existente que tengamos en Google Cloud.
+
+Una vez configurado el proyecto podemos vincularlo con la librería `firebase-tools` que agregaremos a nuestro proyecto local.
+
+``` noLineNumbers
+npm install -g firebase-tools
+```
+
+Luego deberemos de autenticarnos en Google Cloud a través del CLI de Firebase.
+
+``` noLineNumbers
+firebase login
+```
+
+Tras realizar la autenticación podremos inicializar Firebase.
+
+``` noLineNumbers
+firebase init
+```
+Nos aparecerá un asistente de configuración bastante intuitivo.
+
+![Salida de comando firebase init](./firebase-init.png)
+
+Escogeremos la opción de **"Hosting: ... GitHub Action deploys"**.
+
+Esto nos establece toda la configuración necesaria para su despliegue en el hosting de Firebase y además nos configura
+un **workflow** para **GitHub** el cual nos despliega de forma automática el proyecto cuando hagamos un `merge/push` con la rama que tengamos configurada.
+
+Al terminar todos los pasos anteriores tendremos en nuestro proyecto los siguientes nuevos recursos referentes a Firebase.
+
+![Árbol de archivos Firebase](./tree-firebase.png)
+
+Importante añadir a nuestro `.gitignore` la carpeta `.firebase`, ya que es contenido cacheado.
+
+<br/>
+
+Foto de portada de [Thomas Drouault](https://unsplash.com/es/@thomasdrouaultphotography) en [Unsplash](https://unsplash.com/)
