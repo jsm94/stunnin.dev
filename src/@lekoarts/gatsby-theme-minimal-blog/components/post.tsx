@@ -13,6 +13,7 @@ import { Link } from "gatsby"
 import StunninButton from "./stunnin-button"
 import replaceSlashes from "@lekoarts/gatsby-theme-minimal-blog/src/utils/replaceSlashes"
 import useMinimalBlogConfig from "@lekoarts/gatsby-theme-minimal-blog/src/hooks/use-minimal-blog-config"
+import { ArrowBackOutline } from "@styled-icons/evaicons-outline/ArrowBackOutline"
 
 const Post = ({ data: { post } }) => {
   const { basePath, blogPath } = useMinimalBlogConfig()
@@ -58,7 +59,7 @@ const Post = ({ data: { post } }) => {
         <MDXRenderer>{post.body}</MDXRenderer>
       </section>
       <Link to={replaceSlashes(`/${basePath}/${blogPath}`)}>
-          <StunninButton>{`<- blog`}</StunninButton>
+          <StunninButton><ArrowBackOutline sx={{ width: `20px`, margin: `0 0 2px 0`}}/>{` blog`}</StunninButton>
       </Link>
       <PostFooter post={post} />
     </Layout>

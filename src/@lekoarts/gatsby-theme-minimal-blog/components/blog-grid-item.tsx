@@ -8,7 +8,7 @@ import 'moment/locale/es'
 import React from "react"
 import ItemTags from "./item-tags"
 
-const BlogGridItem = ({ post, showTags = true }) => {
+const BlogGridItem = ({ post, showTags = true, showDivider }) => {
   const image = getImage(post.banner)
   moment.locale(`es`)
   const postDate = moment(post.date)
@@ -28,6 +28,9 @@ const BlogGridItem = ({ post, showTags = true }) => {
       <h5 className="mb-2 text-xl font-bold leading-none sm:text-2xl">
         {post.title}
       </h5>
+      {showDivider && (
+        <hr className="my-12 lg:hidden"/>
+      )}
     </Link>
   )
 }

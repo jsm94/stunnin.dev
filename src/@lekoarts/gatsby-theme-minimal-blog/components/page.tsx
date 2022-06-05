@@ -23,7 +23,11 @@ const Page = ({ data: { page } }: PageProps) => (
     <StunninHeading as="h1" variant="styles.h1">
       {page.title}
     </StunninHeading>
-    <section sx={{ my: 5, variant: `layout.content` }}>
+    <section sx={{ 
+      my: 5,
+      variant: `layout.content`,
+      ".gatsby-resp-image-wrapper img": { borderRadius: `0.5rem`}
+      }}>
       <MDXRenderer>{page.body}</MDXRenderer>
     </section>
   </Layout>
