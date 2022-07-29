@@ -18,13 +18,14 @@ module.exports = {
     siteConfig: {
       baseColor: `zinc`
     },
-    version: `v1.0.1`
+    version: `v1.1.1`
   },
   plugins: [
     {
       resolve: `@lekoarts/gatsby-theme-minimal-blog`,
       // See the theme's README for all available options
       options: {
+        blogPath: `/blog`,
         navigation: [
           {
             title: `/blog`,
@@ -147,6 +148,45 @@ module.exports = {
           },
         ],
       },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/locales`,
+        name: `locale`
+      }
+    },
+    {
+      resolve: `gatsby-plugin-react-i18next`,
+      options: {
+        localeJsonSourceName: `locale`, // name given to `gatsby-source-filesystem` plugin.
+        languages: [`es`, `en`],
+        defaultLanguage: `es`,
+        generateDefaultLanguagePage: false,
+        redirect: false,
+        // if you are using Helmet, you must include siteUrl, and make sure you add http:https
+        siteUrl: `http://localhost:8000/`,
+        // you can pass any i18next options
+        i18nextOptions: {
+          interpolation: {
+            escapeValue: false // not needed for react as it escapes by default
+          },
+          keySeparator: false,
+          nsSeparator: false
+        },
+        pages: [
+          {
+            matchPath: '/:lang?/about',
+            getLanguageFromPath: true,
+            excludeLanguages: ['es','en']
+          },
+          {
+            matchPath: '/:lang?/blog/:uid',
+            getLanguageFromPath: true,
+            excludeLanguages: ['en']
+          }
+        ]
+      }
     },
     `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-image`,

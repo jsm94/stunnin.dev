@@ -1,18 +1,17 @@
 /** @jsx jsx */
-import { Link } from "gatsby"
 import { jsx } from "theme-ui"
 import HeroSection from "./hero-section"
 import useSiteMetadata from "../hooks/use-site-metadata"
 import { getImage } from "gatsby-plugin-image"
+import { Link } from "gatsby"
 
-const FeaturedPostView = ({ featuredPost, className = ``, showTags = true }) => {
+const FeaturedPostView = ({ featuredPost, headerText, className = ``, showTags = true }) => {
   const { siteConfig } = useSiteMetadata()
-  const baseColor = siteConfig.baseColor
   const image = getImage(featuredPost.banner)
 
   const heroContent = {
     title: featuredPost.title,
-    headerText: "Destacado",
+    headerText: headerText,
     description: featuredPost.excerpt,
     tags: featuredPost.tags,
     slug: featuredPost.slug,

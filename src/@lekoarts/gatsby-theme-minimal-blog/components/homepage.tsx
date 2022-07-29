@@ -1,26 +1,21 @@
 /** @jsx jsx */
 import { jsx, Flex } from "theme-ui"
-import { Link } from "gatsby"
 import Layout from "@lekoarts/gatsby-theme-minimal-blog/src/components/layout"
-import Title from "@lekoarts/gatsby-theme-minimal-blog/src/components/title"
-import Listing from "@lekoarts/gatsby-theme-minimal-blog/src/components/listing"
-import List from "@lekoarts/gatsby-theme-minimal-blog/src/components/list"
 import useMinimalBlogConfig from "@lekoarts/gatsby-theme-minimal-blog/src/hooks/use-minimal-blog-config"
 import useSiteMetadata from "@lekoarts/gatsby-theme-minimal-blog/src/hooks/use-site-metadata"
 import replaceSlashes from "@lekoarts/gatsby-theme-minimal-blog/src/utils/replaceSlashes"
 import { visuallyHidden } from "@lekoarts/gatsby-theme-minimal-blog/src/styles/utils"
-// @ts-ignore
-import Hero from "../texts/hero"
-// @ts-ignore
-import Bottom from "../texts/bottom"
+
 import useFeaturedPost from "../hooks/featured-post"
 import FeaturedPostView from "./featured-post-view"
 import Grid from "./grid"
 import useLatestPosts from "../hooks/latest-posts"
 import StunninButton from "./stunnin-button"
-import React from "react"
 import { DownArrow } from "@styled-icons/boxicons-regular/DownArrow"
 
+import {Link, useTranslation} from 'gatsby-plugin-react-i18next'
+
+import {Link as LinkGatsby} from 'gatsby'
 
 type PostsProps = {
   posts: {
@@ -39,6 +34,8 @@ type PostsProps = {
 }
 
 const Homepage = ({ posts }: PostsProps) => {
+  const {t} = useTranslation()
+
   const { basePath, blogPath } = useMinimalBlogConfig()
   const { siteTitle } = useSiteMetadata()
 
@@ -54,23 +51,25 @@ const Homepage = ({ posts }: PostsProps) => {
     <Layout>
       <h1 sx={visuallyHidden}>{siteTitle}</h1>
       <section sx={{ mb: [6, 6, 6], p: { fontSize: [1, 2, 3], mt: [2, 2, 2] }, variant: `section_hero` }}>
-        <Hero/>
+        <h3 sx={{ fontSize: [5], fontWeight: 700, color: `primary`}}>{t(`Hola! soy Juanan 👋🏽`)}</h3>
+        <br/>
+        <p sx={{ fontSize: [1], color: `text`}}>{t(`Full-Stack Developer apasionado por crear y aprender sobre tecnología y otros mundos`)}</p>
         <div sx={{ mt: 4, textAlign: `left`}}>
         <Link to={replaceSlashes(`/${basePath}/about`)}>
-          <StunninButton>más sobre mi</StunninButton>
+          <StunninButton>{t(`más sobre mi`)}</StunninButton>
         </Link>
         </div>
       </section>
       <div sx={{ mb: 6, textAlign: `center` }}>
-      <Link to="#featured">
+      <LinkGatsby to="#featured">
           <DownArrow sx={{ width: `20px`, color: `primary`}} className="animate-bounce"/>
-      </Link>
+      </LinkGatsby>
       </div>
-      <FeaturedPostView featuredPost={featuredPost} />
+      <FeaturedPostView featuredPost={featuredPost} headerText={t(`Destacado`)} />
       <Grid posts={latestPosts} showTags={false} />
       <Flex sx={{ alignItems: `center`, justifyContent: `center` }}>
         <Link to={replaceSlashes(`/${basePath}/${blogPath}`)}>
-          <StunninButton>ver todos</StunninButton>
+          <StunninButton>{t(`ver todos`)}</StunninButton>
         </Link>
       </Flex>
     </Layout>

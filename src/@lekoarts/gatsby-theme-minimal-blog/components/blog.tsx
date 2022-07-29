@@ -8,9 +8,11 @@ import Seo from "@lekoarts/gatsby-theme-minimal-blog/src/components/seo"
 import useAllPosts from "../hooks/all-posts"
 import Grid from "./grid"
 import StunninHeading from "./stunnin-heading"
+import { useTranslation } from "gatsby-plugin-react-i18next"
 
 const Blog = ({ posts }) => {
   const { tagsPath, basePath } = useMinimalBlogConfig()
+  const {t} = useTranslation()
 
   const allPosts = useAllPosts()
 

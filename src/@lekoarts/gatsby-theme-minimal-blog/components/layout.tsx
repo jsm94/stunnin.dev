@@ -4,15 +4,17 @@ import { Global } from "@emotion/react"
 import { Box, Container, jsx, useColorMode, get, Flex } from "theme-ui"
 import Seo from "@lekoarts/gatsby-theme-minimal-blog/src/components/seo"
 import Header from "./header"
-import Footer from "@lekoarts/gatsby-theme-minimal-blog/src/components/footer"
+import Footer from "./footer"
 import CodeStyles from "@lekoarts/gatsby-theme-minimal-blog/src/styles/code"
 import SkipNavLink from "@lekoarts/gatsby-theme-minimal-blog/src/components/skip-nav"
 import CrosshairSeparator from "./crosshair-separator"
+import { useTranslation } from "gatsby-plugin-react-i18next"
 
 type LayoutProps = { children: React.ReactNode; className?: string }
 
 const Layout = ({ children, className = `` }: LayoutProps) => {
   const [colorMode, setColorMode] = useColorMode()
+  const {t} = useTranslation()
   className += colorMode + className
 
   return (

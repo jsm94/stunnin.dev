@@ -14,12 +14,19 @@ import StunninButton from "./stunnin-button"
 import replaceSlashes from "@lekoarts/gatsby-theme-minimal-blog/src/utils/replaceSlashes"
 import useMinimalBlogConfig from "@lekoarts/gatsby-theme-minimal-blog/src/hooks/use-minimal-blog-config"
 import { ArrowBackOutline } from "@styled-icons/evaicons-outline/ArrowBackOutline"
+import { I18nextContext, useTranslation } from "gatsby-plugin-react-i18next"
 
 const Post = ({ data: { post } }) => {
   const { basePath, blogPath } = useMinimalBlogConfig()
-  const image: string = post.banner.childImageSharp.resize.src
-  moment.locale(`es`)
   const postDate = moment(post.date, "DD.MM.YYYY")
+
+  const {t} = useTranslation()
+  const { language } = React.useContext(I18nextContext)
+  console.log(language)
+  
+  moment.locale(language)
+  const dateFormat = language === 'es' ? "D [de] MMMM [de] YYYY" : "MMMM D, YYYY"
+  
   return (
     <Layout>
       <Seo
@@ -33,9 +40,9 @@ const Post = ({ data: { post } }) => {
         {post.title}
       </StunninHeading>
       <p sx={{ color: `secondary`, mt: 3, mb: 3, a: { color: `secondary` }, fontSize: [1, 1, 1] }}>
-        <time>{postDate.format("D [de] MMMM [de] YYYY")}</time>
+        <time>{postDate.format(dateFormat)}</time>
         {post.timeToRead && ` — `}
-        {post.timeToRead && <span>{post.timeToRead} minuto{(post.timeToRead > 1) ? `s` : ``} de lectura</span>}
+        {post.timeToRead && <span>{post.timeToRead} {t(`minuto`)}{(post.timeToRead > 1) ? `s` : ``} {t(`de lectura`)}</span>}
       </p>
       {post.tags && (
         <p sx={{ color: `secondary`, mt: 3, mb: 3, a: { color: `primary` }, fontSize: [1, 1, 1] }}>

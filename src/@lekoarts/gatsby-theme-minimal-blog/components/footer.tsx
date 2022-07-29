@@ -1,11 +1,16 @@
 /** @jsx jsx */
+import { Link } from "gatsby"
+import { useTranslation } from "gatsby-plugin-react-i18next"
 import React from "react"
-import { jsx} from "theme-ui"
+import { jsx } from "theme-ui"
 import useSiteMetadata from "../hooks/use-site-metadata"
 
 const Footer = () => {
   const { siteTitle, siteConfig, version } = useSiteMetadata()
   const baseColor = siteConfig.baseColor
+
+  const {t} = useTranslation()
+
   return (
     <footer
       sx={{
@@ -22,7 +27,9 @@ const Footer = () => {
       }}
     >
       <React.Fragment>
-        &copy; {new Date().getFullYear()} by {siteTitle}. All rights reserved.
+          <div>
+          {t(`Creado por`)} <Link to="/about">{t(`mí`)}</Link>.
+          </div>
       </React.Fragment>
       <React.Fragment>
         <p>{version}</p>
