@@ -29,7 +29,7 @@ const HeroSection = (heroContent) => {
       <div className="grid gap-5 row-gap-8 lg:grid-cols-2">
         <div className="flex flex-col justify-center">
           <div className="max-w-xl mb-6">
-            <h2 className="max-w-lg mb-6 text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none">
+            <h2 className="max-w-lg mb-6 text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none break-words">
               {heroContent.title}
             </h2>
             <p className="mb-2">{postDate.format(dateFormat)} · {heroContent.timeToRead} min</p>

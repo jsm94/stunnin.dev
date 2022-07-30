@@ -31,7 +31,7 @@ const BlogGridItem = ({ post, showTags = true, showDivider }) => {
           </React.Fragment>
         </p>
         )}
-      <h5 className="mb-2 text-xl font-bold leading-none sm:text-2xl">
+      <h5 className="mb-2 text-xl font-bold leading-none sm:text-2xl break-words">
         {post.title}
       </h5>
       {showDivider && (
