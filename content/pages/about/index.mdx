@@ -1,24 +1,36 @@
 ---
 title: about
-slug: "/about"
+slug: "about"
 ---
 
-<div class="grid grid-cols-1 lg:grid-cols-2">
-	<div>
-		<p>Hola! soy Juan Antonio (aunque me conocen por Juanan o Juan).</p>
+import StackCarousel from "./../../../src/@lekoarts/gatsby-theme-minimal-blog/components/stack-carousel"
+import LinksCarousel from "./../../../src/@lekoarts/gatsby-theme-minimal-blog/components/links-carousel"
+
+<div class="grid grid-cols-1 lg:grid-cols-3">
+	<div class="col-span-2">
+		<p>👽 Hola! soy Juan Antonio (aunque me conocen por Juanan o Juan)</p>
 		<br />
-		<p>Soy <b>Full-Stack Developer</b> y me gusta aportar valor tanto en equipos multidisciplinares como desarrollando en solitario.</p>
+		<p>🦄 Soy <b>Full-Stack Developer</b> con 7 años de experiencia</p>
+		<br/>
+		<p>🚀 Me apasiona formarme sobre nuevas tecnologías y crear soluciones que aporten valor</p>
 		<br />
-		<p>Actualmente trabajo en Sevilla como <b>Senior Developer</b> en <a href="https://www.lynxspa.com/" target="_blank">Lynx</a>.</p>
+		<p>🌱 Siempre intentado mejorar como profesional y como ser humano</p>
 		<br />
-		<p>Me apasiona aprender y embarcarme en nuevos proyectos, por ello he creado este sitio, para compartir mi experiencia sobre aprendizajes, ideas y documentación que me sería útil entre otras cosas.</p>
+		<p>👨🏽‍💻 Actualmente trabajo en Sevilla como <b>Senior Developer</b> en <a href="https://www.lynxspa.com/" target="_blank">Lynx</a></p>
 		<br />
-		<p>Este proyecto se encuentra bajo una marca personal (stunnin'.dev), ya que otras de mis aficiones es el diseño.</p>
-		<br />
-		<p>Este blog está construido con <a href="https://www.gatsbyjs.com/" target="_blank">Gatsby</a> y ha sido toda una aventura para mí llevarlo a cabo mientras aprendía sobre <a href="https://reactjs.org/" target="_blank">React</a>, <a href="https://graphql.org/" target="_blank">GraphQL</a>, <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a> y otras tecnologías en el proceso.</p>
 	</div>
-	<div class="hidden lg:block" style="padding: 0 2rem 2rem 6rem; width:100%, height: 300px">
-		<img style="border-radius: 0.5rem" src="./me.jpg" />
+	<div class="hidden lg:block" style="padding: 0 1rem 1rem 6rem; width: 416px;">
+		<img style="border-radius: 0.5rem;" src="/me.jpg"/>
+	</div>
+</div>
+
+<br />
+
+<br />
+
+<div class="grid grid-cols-1">
+	<div class="flex flex-wrap justify-around">
+		<StackCarousel/>
 	</div>
 </div>
 
@@ -27,15 +39,14 @@ slug: "/about"
 	<br />
 </div>
 
-Te invito a que le eches un vistazo a [este post](/sobre-este-proyecto) para conocer más sobre la arquitectura de este proyecto.
+<br />
+
+<p>Puedes contactarme por <a href="mailto:hello@stunnin.dev">email</a> o encontrarme por la red</p>
 
 <br />
 
-Si quieres conocer  en detalle mi experiencia, CV, o preguntar cualquier otra cosa, puedes encontrarme en:
-
-<br />
-
-- \- [hello [at] stunnin [dot] dev](mailto:hello@stunnin.dev)
-- \- [GitHub [@jsm94]](https://github.com/jsm94)
-- \- [Twitter [@stunnindev]](https://twitter.com/stunnindev)
-- \- [LinkedIn](https://www.linkedin.com/in/juan-antonio-seco-merch%C3%A1n/)
+<div class="grid grid-cols-1">
+	<div class="flex flex-wrap justify-evenly">
+		<LinksCarousel/>
+	</div>
+</div>
