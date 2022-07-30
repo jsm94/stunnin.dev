@@ -28,7 +28,7 @@ const Footer = () => {
     >
       <React.Fragment>
           <div>
-          {t(`Creado por`)} <Link to="/about">{t(`mí`)}</Link>.
+          {t(`Hecho con ♥`)}
           </div>
       </React.Fragment>
       <React.Fragment>
