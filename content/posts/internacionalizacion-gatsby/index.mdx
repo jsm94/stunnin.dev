@@ -1,0 +1,322 @@
+---
+title: Internacionalización con Gatsby
+date: 2022-07-30
+description: En este artículo enseñaré una solución para internacionalizar un blog Gatsby
+tags:
+  - reactjs
+  - gatsby
+  - i18n
+banner: ./tony-lee-nZlaCQlYAnA-unsplash.jpg
+slug: /blog/internacionalizacion-gatsby
+---
+
+En este artículo te enseñaré cómo internacionalicé este blog. Si tienes uno con **Gatsby** puede que esta solución te sea de ayuda.
+
+Todos los ejemplos provienen del código fuente de este proyecto que puedes consultar [aquí](https://github.com/jsm94/stunnin.dev) por si necesitas más detalles.
+
+<br />
+
+#### Necesidades
+
+Si buscas en Google cómo internacionalizar con Gatsby te aparecerán varias soluciones.
+
+A mí personalmente ninguna de ellas me encajaban en este blog, principalmente por varios problemas.
+
+Este blog viene heredado del [gatsby-starter-minimal-blog](https://github.com/LekoArts/gatsby-starter-minimal-blog) de [LekoArts](https://www.lekoarts.de/),
+lo que para extenderlo de tal forma que genere dinámicamente los posts según el idioma, iba a ocasionar algunos dolores de cabeza y por lo pronto no me es necesario.
+
+También debe ser flexible en cuanto a configuración, para indicar qué páginas no queremos que se generen traducciones.
+
+Además debía permitirme internacionalizar los textos a través de un fichero con las traducciones. Esto permitirá a Gatsby generar nuestras páginas por idioma automáticamente.
+
+<br />
+
+#### ¿Cuál fue la solución?
+
+Casualmente el plugin más descargado de **i18n** fue el que me iba a dar la solución, [gatsby-plugin-react-i18next](https://www.gatsbyjs.com/plugins/gatsby-plugin-react-i18next).
+
+Sólo que hay que dotarlo con un poco de configuración extra a la que nos encontramos en otros artículos por la web.
+
+Este plugin cubre los casos que necesitaba a la perfección por su flexibilidad, así que pasemos a cómo se configura.
+
+Primero instálalo en tu proyecto.
+
+```
+npm install --save gatsby-plugin-react-i18next i18next react-i18next
+```
+
+Luego en `gatsby-config.js` añade la configuración. Te dejo como ejemplo la de este proyecto:
+
+``` js:title=gatsby-config.js
+{
+  resolve: `gatsby-plugin-react-i18next`,
+  options: {
+    localeJsonSourceName: `locale`, // name given to `gatsby-source-filesystem` plugin.
+    languages: [`es`, `en`],
+    defaultLanguage: `es`,
+    generateDefaultLanguagePage: false,
+    redirect: false,
+    // if you are using Helmet, you must include siteUrl, and make sure you add http:https
+    siteUrl: `http://localhost:8000/`,
+    // you can pass any i18next options
+    i18nextOptions: {
+      interpolation: {
+        escapeValue: false // not needed for react as it escapes by default
+      },
+      keySeparator: false,
+      nsSeparator: false
+    },
+    pages: [
+      {
+        matchPath: '/:lang?/about',
+        getLanguageFromPath: true,
+        excludeLanguages: ['es','en']
+      },
+      {
+        matchPath: '/:lang?/blog/:uid',
+        getLanguageFromPath: true,
+        excludeLanguages: ['en']
+      }
+    ]
+  }
+}
+```
+
+Si os fijáis en la clave `pages`, aquí se incluyen las rutas que no queremos que se nos genere traducción con el plugin, porque lo haremos de forma manual. Esto lo definimos con la declarativa `excludeLanguages`.
+
+Importante también desactivar `generateDefaultLanguagePage`, a no ser que quieras tener `/es/` en todos tus enlaces (aunque totalmente válido, a mí no me convencía).
+
+En mi caso se puede ver que lo hice para la página about, ya que me era más sencillo hacerlo de forma manual con rutas. Esto puede hacerse de la forma que expongo a continuación.
+
+En gatsby tenemos la estructura de carpetas `content/pages/about`, en este caso para nuestro idioma principal (español).
+
+Para la página de about en inglés tendríamos que crear la siguiente estructura: `content/pages/en/about`
+
+Luego en el `index.mdx` donde tenemos el contenido de la página añadimos la declarativa `slug` con el contenido  `"/en/about"`.
+
+Estás dos páginas serán creadas por Gatsby sin ayuda alguna del plugin. Por lo que sí, podemos internacionalizar de forma manual nuestra web.
+
+Siguiendo con la configuración, podemos ver que también excluí los posts, porque en mi caso no voy a traducirlos, simplemente escribiré tanto en español como en inglés diferentes artículos. Por lo que seguiríamos la misma etsrategia que para la página de about.
+
+<br />
+
+#### Traducciones
+
+Entonces, te estarás preguntando... ¿para qué el plugin?
+
+Pues bueno, para traducir los textos fijos de la web y tener un portfolio con varios idiomas. Además de poder cambiar el idioma en tiempo real sin percibir ningún refresco en la web.
+
+El plugin al detectar en nuestra URL que tenemos un lenguaje de la forma `/:lang?/` nos permite acceder a la variable `locale` (definida previamente en la configuración anterior) a través de las consultas GraphQL de nuestras páginas generadas en la configuración de `gatsby-node.js`.
+
+Esta variable almacena qué idioma se usa en esa ruta, por lo que genera el contenido según nuestro fichero de traducciones. Aquí es nuestro trabajo editar nuestros componentes para traducir los textos.
+
+Para ello usamos el siguiente import:
+
+``` tsx
+import {Link, useTranslation} from 'gatsby-plugin-react-i18next'
+```
+
+El componente `Link` lo usaremos tal cual usamos el de Gatsby, sólo que este se encarga automáticamente de redirigir al idioma al que te encuentras.
+
+El hook `useTranslation` lo usaremos para nuestros textos. Veamos un ejemplo:
+
+``` tsx:title=src/@lekoarts/gatsby-theme-minimal-blog/components/homepage.tsx {3,8,18,20,23}
+
+...
+
+import {Link, useTranslation} from 'gatsby-plugin-react-i18next'
+
+...
+
+const Homepage = ({ posts }: PostsProps) => {
+  const {t} = useTranslation()
+  
+  ...
+
+  return (
+    <Layout>
+      
+      ...
+
+      <section sx={{ mb: [6, 6, 6], p: { fontSize: [1, 2, 3], mt: [2, 2, 2] }, variant: `section_hero` }}>
+        <h3 sx={{ fontSize: [5], fontWeight: 700, color: `primary`}}>{t(`Hola! soy Juanan 👋🏽`)}</h3>
+        <br/>
+        <p sx={{ fontSize: [1], color: `text`}}>{t(`Full-Stack Developer apasionado por crear y aprender sobre tecnología y otros mundos`)}</p>
+        <div sx={{ mt: 4, textAlign: `left`}}>
+        <Link to={replaceSlashes(`/${basePath}/about`)}>
+          <StunninButton>{t(`más sobre mi`)}</StunninButton>
+        </Link>
+
+        ...
+
+    </Layout>
+  )
+}
+
+export default Homepage
+```
+
+Las traducciones las debemos tener localizadas en `locales/en/translation.json` (no hace falta una para español, ya que se visualiza el texto que usamos como clave):
+
+``` json:title=locales/en/translation.json
+{
+	"más sobre mi": "more about me",
+
+  ...
+
+	"Hola! soy Juanan 👋🏽": "Hi! I'm Juanan 👋🏽",
+	"Full-Stack Developer apasionado por crear y aprender sobre tecnología y otros mundos": "Full-Stack Developer passionate for creating and learning about technology and other worlds",
+
+  ...
+
+}
+```
+
+Nuestras consultas de GraphQL las modificaremos añadiendoles el acceso a la variable `locale` de la siguiente forma:
+
+```tsx:title=src/@lekoarts/gatsby-theme-minimal-blog-core/templates/homepage-query.tsx {2,17-25}
+export const query = graphql`
+  query ($formatString: String!, $language: String!) {
+    allPost(sort: { fields: date, order: DESC }, limit: 3) {
+      nodes {
+        slug
+        title
+        date(formatString: $formatString)
+        excerpt
+        timeToRead
+        description
+        tags {
+          name
+          slug
+        }
+      }
+    }
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
+  }
+`
+```
+
+Importante añadir la variable `$language` de tipo `String` _(línea 2)_.
+
+##### Localización de fechas
+
+En este proyecto se usa la librería [Moment.js](https://momentjs.com/) para formatear las fechas.
+
+También podemos aprovechar esta librería para formatear la fecha según el idioma con el **hook** `useContext` para suscribirnos al **contexto** `I18nextContext`, que nos permite acceder al idioma que se está usando.
+
+Una vez tengamos nuestro idioma podemos pasárselo a **Moment**. Te dejo una implementación de ello:
+
+```tsx:title=src/@lekoarts/gatsby-theme-minimal-blog/components/blog-grid-item.tsx {3,10,12,13}
+
+...
+
+import { I18nextContext, useTranslation } from "gatsby-plugin-react-i18next"
+
+...
+
+const BlogGridItem = ({ post, showTags = true, showDivider }) => {
+  const image = getImage(post.banner)
+
+  const { language } = React.useContext(I18nextContext)
+  
+  moment.locale(language)
+  const dateFormat = language === 'es' ? "D MMMM, YYYY" : "MMMM D, YYYY"
+  const postDate = moment(post.date, "MMMM D, YYYY")
+
+  ...
+
+```
+
+#### Cambio de idioma
+
+Si te fijas en esta misma web, en la parte superior a la derecha puedes ver que puedes seleccionar el idioma.
+
+Esto se ha hecho con una combinación del **hook** `useI18next` y el **contexto** `I18nextContext`.
+
+`useI18next` nos devuelve los lenguajes que tenemos configurados (`{languages}`) y la ruta en la que nos situamos (`{originalPath}`), así podremos crear un componente `Link` del plugin **i18n** por cada idioma y cada uno con la ruta actual.
+
+```tsx
+{languages.map((lng) => (
+    <li key={lng}>
+      <Link to={originalPath} language={lng}>
+        {lng}
+      </Link>
+    </li>
+))}
+```
+
+
+Luego con el contexto, podemos saber en qué idioma nos situamos para poder darle feedback al usuario dejando activo el enlace.
+
+```tsx {3}
+{languages.map((lng) => (
+    <li key={lng}>
+      <Link to={originalPath} language={lng} sx={{color: language == lng ? `text` : `inherit`}}>
+        {lng}
+      </Link>
+    </li>
+))}
+```
+
+Veamos una implementación completa de esto:
+
+```tsx:title=src/@lekoarts/gatsby-theme-minimal-blog/components/header.tsx {3,11,12,21-28}
+
+...
+
+import { I18nextContext, Link, useI18next } from "gatsby-plugin-react-i18next"
+
+...
+
+const Header = () => {
+  
+  ...
+
+  const {languages, originalPath} = useI18next()
+  const { language } = React.useContext(I18nextContext)
+
+  return (
+    <header sx={{ mb: [4, 5] }}>
+      <Helmet htmlAttributes={{ displayMode }} />
+      <Flex sx={{ alignItems: `center`, justifyContent: `space-between` }}>
+        <HeaderTitle />
+        <div sx={{ display: `flex` }}>
+          <div sx={{ fontSize: [1, `15px`], color: `secondary`, mr: [`28px`, `30px`]}} className="languages">
+          {languages.map((lng, i) => (
+            <span key={lng}>
+              {i > 0 && (<span>|</span>)}
+              <Link to={originalPath} language={lng} sx={{color: language == lng ? `text` : `inherit`}}>
+                {lng}
+              </Link>
+            </span>
+          ))}
+          </div>
+          
+          ...
+
+        </div>
+      </Flex>
+
+      ...
+
+```
+
+<br />
+
+#### Conclusiones
+
+Cómo véis es bastante sencillo de usar este plugin para localizar tu proyecto Gatsby, además de flexible permitiéndote solucionar casi cualquier forma de localización que se te ocurra.
+
+Si aceptáis un consejo, leeros siempre la documentación al completo del recurso que queráis usar, ya que cada maestrillo tiene su librillo y puede que la solución que te muestran en un post no encaje en tu proyecto. Pero observando las posibilidades que puede darte ese recurso seguramente encuentres la solución a tu problema.
+
+🌍
+
+Foto de portada de [Tony Lee](https://unsplash.com/es/@tli427) en [Unsplash](https://unsplash.com/)
