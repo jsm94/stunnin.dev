@@ -26,7 +26,7 @@ const HeroSection = (heroContent) => {
   return (
     <div className={`px-8 py-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-16 md:py-12 lg:px-24 lg:py-12 bg-zinc-100 dark:bg-zinc-800`}>
       <h2 className="text-2xl mb-5">{heroContent.headerText}</h2>
-      <div className="grid gap-5 row-gap-8 lg:grid-cols-2">
+      <div className="sm:grid gap-5 row-gap-8 lg:grid-cols-2">
         <div className="flex flex-col justify-center">
           <div className="max-w-xl mb-6">
             <h2 className="max-w-lg mb-6 text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none break-words">
